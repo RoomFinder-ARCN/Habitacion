@@ -25,9 +25,10 @@ public class HabitacionController {
     public ResponseEntity<?> agregarHabitacion(@RequestBody Habitacion habitacion){
         try{
             var habitacionAgregada= habitacionServicio.agregarHabitacion(habitacion);
-            return ResponseEntity.status(201).body("Habitacion :" + habitacionAgregada.getNumeroHabitacion() +" agregada");
+            return ResponseEntity.status(201).body("Habitacion: " + habitacionAgregada.getNumeroHabitacion() +" agregada");
 
         }catch(Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(403).body(e.getMessage());
 
         }

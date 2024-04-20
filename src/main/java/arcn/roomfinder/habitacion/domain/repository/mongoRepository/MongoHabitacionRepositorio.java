@@ -3,12 +3,14 @@ package arcn.roomfinder.habitacion.domain.repository.mongoRepository;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import arcn.roomfinder.habitacion.domain.entity.HabitacionEntidad;
 import arcn.roomfinder.habitacion.domain.exception.RoomFinderException;
 import arcn.roomfinder.habitacion.domain.model.Habitacion;
 import arcn.roomfinder.habitacion.domain.repository.HabitacionRepositorio;
 
+@Repository
 public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     private MongoHabitacionInterface mongoHabitacionInterface;

@@ -81,6 +81,6 @@ public class HabitacionServicioTest {
     public void deberiaLanzarExcepcionSiNoTieneInfoHabitacion() throws RoomFinderException{
         doThrow(RoomFinderException.class).when(habitacionRepositorio).agregarHabitacion(nullable(Habitacion.class));
         assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarHabitacion(null));
-        assertThrows(NullPointerException.class, () -> habitacionServicio.agregarHabitacion(new Habitacion(null, null, null, null)));
+        assertThrows(NullPointerException.class, () -> habitacionServicio.agregarHabitacion(new Habitacion(null, null, null, null,null)));
     }
 }

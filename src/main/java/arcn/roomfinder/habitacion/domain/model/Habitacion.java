@@ -32,6 +32,7 @@ public class Habitacion {
 
     private String descripcion;
 
+    @NonNull
     private Collection<Servicio> servicios;
 
     
