@@ -463,8 +463,8 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        doThrow(RoomFinderException.class).when(habitacionRepositorio).modificarServiciosHabitacion(anyString(), anySet());
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion("300", serviciosTest));;
+        doThrow(RoomFinderException.class).when(habitacionRepositorio).eliminarServiciosHabitacion(anyString(), anySet());
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion("300", serviciosTest));;
     }
 
     @Test
@@ -474,7 +474,7 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion(null, serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion(null, serviciosTest));;
     }
 
     @Test
@@ -484,7 +484,7 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion("", serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion("", serviciosTest));;
     }
 
     @Test
