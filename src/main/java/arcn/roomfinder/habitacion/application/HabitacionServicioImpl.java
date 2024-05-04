@@ -61,24 +61,20 @@ public class HabitacionServicioImpl implements HabitacionServicio {
 
     @Override
     public void agregarServiciosHabitacion(String numeroHabitacion, Set<Servicio> servicios) throws RoomFinderException {
-        if(numeroHabitacion == null || numeroHabitacion.equals("") || servicios == null || servicios.isEmpty()) 
-        throw new RoomFinderException("Los datos no pueden ser nulos o vacios");
-
+        if(numeroHabitacion == null || numeroHabitacion.equals("") || servicios == null || servicios.isEmpty()) throw new RoomFinderException("Los datos no pueden ser nulos o vacios");
         habitacionRepositorio.agregarServiciosHabitacion(numeroHabitacion, servicios); 
     }
 
     @Override
     public void modificarServiciosHabitacion(String numeroHabitacion, Set<Servicio> servicios) throws RoomFinderException {
-        if(numeroHabitacion == null || numeroHabitacion.equals("") || servicios == null || servicios.isEmpty()) 
-        throw new RoomFinderException("Los datos no pueden ser nulos o vacios");
+        if(numeroHabitacion == null || numeroHabitacion.equals("") || servicios == null || servicios.isEmpty()) throw new RoomFinderException("Los datos no pueden ser nulos o vacios");
         habitacionRepositorio.modificarServiciosHabitacion(numeroHabitacion, servicios);
     }
 
 
     @Override
     public void eliminarServiciosHabitacion(String numeroHabitacion, Set<Servicio> servicios) throws RoomFinderException {
-        if(numeroHabitacion == null || numeroHabitacion.equals("") || servicios == null || servicios.isEmpty()) 
-        throw new RoomFinderException("Los datos no pueden ser nulos o vacios");
+        if(numeroHabitacion == null || numeroHabitacion.equals("") || servicios == null || servicios.isEmpty()) throw new RoomFinderException("Los datos no pueden ser nulos o vacios");
         habitacionRepositorio.eliminarServiciosHabitacion(numeroHabitacion, servicios);
     }
     
