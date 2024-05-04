@@ -90,6 +90,21 @@ public class HabitacionServicioTest {
     }
 
     @Test
+    public void noDeberiaPermitirServicioCuandoNoExisteElValorDelServicio() throws RoomFinderException{
+        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("PLANTAS"));
+    }
+
+    @Test
+    public void noDeberiaPermitirServicioCuandoElValorDelServicioEsNulo() throws RoomFinderException{
+        assertThrows(NullPointerException.class, () -> Servicio.valueOf(null));
+    }
+
+    @Test
+    public void noDeberiaPermitirServicioCuandoElValorDelServicioEsVacio() throws RoomFinderException{
+        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf(""));
+    }
+
+    @Test
     public void deberiaConsultarTodasLasHabitaciones(){
         Set<Servicio> serviciosTest = Set.of(
             Servicio.valueOf("RESTAURANTE"),
@@ -148,22 +163,22 @@ public class HabitacionServicioTest {
     @Test
     public void noDeberiaModificarEstadoHabitacionSiNoExisteLaHabitacion() throws RoomFinderException{
         doThrow(RoomFinderException.class).when(habitacionRepositorio).modificarEstadoHabitacion(anyString(), any(EstadoHabitacion.class));
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarEstadoHabitacion("300", EstadoHabitacion.valueOf("RESERVADA")));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarEstadoHabitacion("300", EstadoHabitacion.valueOf("RESERVADA")));
     }
 
     @Test
     public void noDeberiaModificarEstadoHabitacioCuandoEsNulo() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarEstadoHabitacion(habitacionCorrecta.getNumeroHabitacion(), null));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarEstadoHabitacion(habitacionCorrecta.getNumeroHabitacion(), null));
     }
 
     @Test
     public void noDeberiaModificarEstadoHabitacioCuandoNumHabitacionEsNulo() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarEstadoHabitacion(null, EstadoHabitacion.valueOf("RESERVADA")));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarEstadoHabitacion(null, EstadoHabitacion.valueOf("RESERVADA")));
     }
 
     @Test
     public void noDeberiaModificarEstadoHabitacioCuandoNumHabitacionEsVacio() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarEstadoHabitacion("", EstadoHabitacion.valueOf("RESERVADA")));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarEstadoHabitacion("", EstadoHabitacion.valueOf("RESERVADA")));
     }
 
     @Test
@@ -176,22 +191,30 @@ public class HabitacionServicioTest {
     @Test
     public void noDeberiaModificarPrecioHabitacionSiNoExisteLaHabitacion() throws RoomFinderException{
         doThrow(RoomFinderException.class).when(habitacionRepositorio).modificarPrecioHabitacion(anyString(), anyDouble());
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion("300", 9850000.0));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion("300", 9850000.0));
     }
 
-    @Test
-    public void noDeberiaModificarPrecioHabitacioCuandoEsVacio() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion(habitacionCorrecta.getNumeroHabitacion(), null));;
-    }
+
 
     @Test
     public void noDeberiaModificarPrecioHabitacioCuandoNumHabitacionEsNulo() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion(null, 9850000.0));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion(null, 9850000.0));
     }
 
     @Test
     public void noDeberiaModificarPrecioHabitacioCuandoNumHabitacionEsVacio() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion("", 9850000.0));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion("", 9850000.0));
+    }
+
+    @Test
+    public void noDeberiaModificarPrecioHabitacioCuandoPrecioEsNulo() throws RoomFinderException{
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion(habitacionCorrecta.getNumeroHabitacion(), null));
+    }
+
+    @Test
+    public void noDeberiaModificarPrecioHabitacioCuandoPrecioNoEsMayorACero() throws RoomFinderException{
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion(habitacionCorrecta.getNumeroHabitacion(), -52560000.0));
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarPrecioHabitacion(habitacionCorrecta.getNumeroHabitacion(), 0.0));
     }
 
     @Test
@@ -204,17 +227,17 @@ public class HabitacionServicioTest {
     @Test
     public void noDeberiaModificarDescripcionHabitacionSiNoExisteLaHabitacion() throws RoomFinderException{
         doThrow(RoomFinderException.class).when(habitacionRepositorio).modificarDescripcionHabitacion(anyString(), anyString());
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarDescripcionHabitacion("300", "Habitacion con ambientacion infantil"));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarDescripcionHabitacion("300", "Habitacion con ambientacion infantil"));
     }
 
     @Test
     public void noDeberiaModificarDescripcionHabitacioCuandoNumHabitacionEsNulo() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarDescripcionHabitacion(null, "Habitacion con ambientacion infantil"));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarDescripcionHabitacion(null, "Habitacion con ambientacion infantil"));
     }
 
     @Test
     public void noDeberiaModificarDescripcionHabitacioCuandoNumHabitacionEsVacio() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarDescripcionHabitacion("", "Habitacion con ambientacion infantil"));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarDescripcionHabitacion("", "Habitacion con ambientacion infantil"));
     }
 
    @Test
@@ -262,7 +285,7 @@ public class HabitacionServicioTest {
         );
 
         doThrow(RoomFinderException.class).when(habitacionRepositorio).agregarServiciosHabitacion(anyString(), anySet());
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion("300", serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion("300", serviciosTest));
     }
 
     @Test
@@ -272,7 +295,7 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion(null, serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion(null, serviciosTest));
     }
 
     @Test
@@ -282,22 +305,7 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion("", serviciosTest));;
-    }
-
-    @Test
-    public void noDeberiaAgregarServiciosHabitacionSiNoExisteElServicio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("PLANTAS"));
-    }
-
-    @Test
-    public void noDeberiaAgregarServiciosHabitacionSiElServicioEsNulo() throws RoomFinderException{
-        assertThrows(NullPointerException.class, () -> Servicio.valueOf(null));
-    }
-
-    @Test
-    public void noDeberiaAgregarServiciosHabitacionSiElServicioEsVacio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf(""));
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion("", serviciosTest));
     }
 
     @Test
@@ -312,7 +320,7 @@ public class HabitacionServicioTest {
             Collections.emptySet()
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), null));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), null));
     }
 
     @Test
@@ -327,7 +335,7 @@ public class HabitacionServicioTest {
             Collections.emptySet()
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), Collections.emptySet()));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.agregarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), Collections.emptySet()));
     }
     
     @Test
@@ -367,7 +375,7 @@ public class HabitacionServicioTest {
         );
 
         doThrow(RoomFinderException.class).when(habitacionRepositorio).modificarServiciosHabitacion(anyString(), anySet());
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion("300", serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion("300", serviciosTest));
     }
 
     @Test
@@ -377,7 +385,7 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion(null, serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion(null, serviciosTest));
     }
 
     @Test
@@ -387,22 +395,7 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion("", serviciosTest));;
-    }
-
-    @Test
-    public void noDeberiaModificarServiciosHabitacionSiNoExisteElServicio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("ESCRITORIO"));
-    }
-
-    @Test
-    public void noDeberiaModificarServiciosHabitacionSiElServicioEsNulo() throws RoomFinderException{
-        assertThrows(NullPointerException.class, () -> Servicio.valueOf(null));
-    }
-
-    @Test
-    public void noDeberiaModificarServiciosHabitacionSiElServicioEsVacio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf(""));
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion("", serviciosTest));
     }
 
     @Test
@@ -417,7 +410,7 @@ public class HabitacionServicioTest {
             Collections.emptySet()
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), null));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), null));
     }
 
     @Test
@@ -432,7 +425,7 @@ public class HabitacionServicioTest {
             Collections.emptySet()
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), Collections.emptySet()));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.modificarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), Collections.emptySet()));
     }
 
     @Test
@@ -464,7 +457,7 @@ public class HabitacionServicioTest {
         );
 
         doThrow(RoomFinderException.class).when(habitacionRepositorio).eliminarServiciosHabitacion(anyString(), anySet());
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion("300", serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion("300", serviciosTest));
     }
 
     @Test
@@ -474,7 +467,7 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion(null, serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion(null, serviciosTest));
     }
 
     @Test
@@ -484,22 +477,37 @@ public class HabitacionServicioTest {
             Servicio.valueOf("TELEVISION")
         );
 
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion("", serviciosTest));;
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion("", serviciosTest));
     }
 
     @Test
-    public void noDeberiaEliminarServiciosHabitacionSiNoExisteElServicio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("SOFAS"));
+    public void noDeberiaEliminarServiciosHabitacionSiServiciosEsNulo() throws RoomFinderException{
+        Habitacion habitacionTest = new Habitacion(
+            TipoHabitacion.valueOf("DOBLE"), 
+            "102", 
+            EstadoHabitacion.valueOf("DISPONIBLE"), 
+            950000.0, 
+            2, 
+            "Habitacion con vista al exterior", 
+            Collections.emptySet()
+        );
+
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), null));
     }
 
     @Test
-    public void noDeberiaEliminarServiciosHabitacionSiElServicioEsNulo() throws RoomFinderException{
-        assertThrows(NullPointerException.class, () -> Servicio.valueOf(null));
-    }
+    public void noDeberiaEliminarServiciosHabitacionSiServiciosEsVacio() throws RoomFinderException{
+        Habitacion habitacionTest = new Habitacion(
+            TipoHabitacion.valueOf("DOBLE"), 
+            "102", 
+            EstadoHabitacion.valueOf("DISPONIBLE"), 
+            950000.0, 
+            2, 
+            "Habitacion con vista al exterior", 
+            Collections.emptySet()
+        );
 
-    @Test
-    public void noDeberiaEliminarServiciosHabitacionSiElServicioEsVacio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf(""));
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.eliminarServiciosHabitacion(habitacionTest.getNumeroHabitacion(), Collections.emptySet()));
     }
 
     
