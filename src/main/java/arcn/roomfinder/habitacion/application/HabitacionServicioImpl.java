@@ -1,6 +1,5 @@
 package arcn.roomfinder.habitacion.application;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
