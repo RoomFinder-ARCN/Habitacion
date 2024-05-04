@@ -1,6 +1,6 @@
 package arcn.roomfinder.habitacion.domain.model;
 
-import java.util.Collection;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +33,6 @@ public class Habitacion {
     private String descripcion;
 
     @NonNull
-    private Collection<Servicio> servicios;
-
+    private Set<Servicio> servicios;
     
 }

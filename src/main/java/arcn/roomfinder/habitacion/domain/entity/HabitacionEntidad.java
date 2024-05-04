@@ -1,6 +1,6 @@
 package arcn.roomfinder.habitacion.domain.entity;
 
-import java.util.Collection;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,6 +27,6 @@ public class HabitacionEntidad {
     private Double precio;
     private int capacidad;
     private String descripcion;
-    private Collection<Servicio> servicios;
+    private Set<Servicio> servicios;
     
 }
