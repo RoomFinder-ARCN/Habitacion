@@ -7,14 +7,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +23,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.matchers.Null;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import arcn.roomfinder.habitacion.application.HabitacionServicioImpl;
@@ -292,9 +288,6 @@ public class HabitacionServicioTest {
     @Test
     public void noDeberiaAgregarServiciosHabitacionSiNoExisteElServicio() throws RoomFinderException{
         assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("PLANTAS"));
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("ESCRITORIO"));
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("SOFAS"));
-
     }
 
     @Test
@@ -399,9 +392,7 @@ public class HabitacionServicioTest {
 
     @Test
     public void noDeberiaModificarServiciosHabitacionSiNoExisteElServicio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("PLANTAS"));
         assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("ESCRITORIO"));
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("SOFAS"));
     }
 
     @Test
@@ -498,8 +489,6 @@ public class HabitacionServicioTest {
 
     @Test
     public void noDeberiaEliminarServiciosHabitacionSiNoExisteElServicio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("PLANTAS"));
-        assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("ESCRITORIO"));
         assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("SOFAS"));
     }
 
