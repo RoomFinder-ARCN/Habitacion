@@ -18,6 +18,11 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     private MongoHabitacionInterface mongoHabitacionInterface;
 
+    private static final String HABITACION_NO_NULA = "La habitacion no puede ser null";
+    private static final String MENSAJE_NUM_HABITACION = "El numero de habitacion no puede ser null";
+    private static final String HABITACION_NO_ENCONTRADA = "No se encontró la habitación con el número: ";
+    private static final String MENSAJE_DATOS = "El numero o servicios de la habitacion no pueden ser null";
+
     @Autowired
     public MongoHabitacionRepositorio(MongoHabitacionInterface mongoHabitacionInterface) {
         this.mongoHabitacionInterface = mongoHabitacionInterface;
@@ -25,7 +30,7 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public Habitacion agregarHabitacion(Habitacion habitacion) throws RoomFinderException {
-        if(habitacion == null) throw new RoomFinderException("La habitacion no puede ser null");
+        if(habitacion == null) throw new RoomFinderException(HABITACION_NO_NULA);
         
         HabitacionEntidad habitacionEntidad = new HabitacionEntidad();
         habitacionEntidad.setTipoHabitacion(habitacion.getTipoHabitacion());
@@ -57,18 +62,18 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public Habitacion consultarHabitacionPorNumero(String numeroHabitacion) throws RoomFinderException {
-        if(numeroHabitacion == null) throw new RoomFinderException("El numero de habitacion no puede ser null");
+        if(numeroHabitacion == null) throw new RoomFinderException(MENSAJE_NUM_HABITACION);
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
-                                            .orElseThrow(() -> new RoomFinderException("No se encontró la habitación con el número: " + numeroHabitacion));
+                                            .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
 
         return crearHabitacion(habitacionEntidad);
     }
 
     @Override
     public Habitacion modificarEstadoHabitacion(String numeroHabitacion, EstadoHabitacion estadoHabitacion) throws RoomFinderException{
-        if(numeroHabitacion == null) throw new RoomFinderException("El numero de habitacion no puede ser null");
+        if(numeroHabitacion == null) throw new RoomFinderException(MENSAJE_NUM_HABITACION);
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
-                                            .orElseThrow(() -> new RoomFinderException("No se encontró la habitación con el número: " + numeroHabitacion));
+                                            .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
         
         habitacionEntidad.setEstadoHabitacion(estadoHabitacion);
 
@@ -79,9 +84,9 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public Habitacion modificarPrecioHabitacion(String numeroHabitacion, Double precio) throws RoomFinderException {
-        if(numeroHabitacion == null) throw new RoomFinderException("El numero de habitacion no puede ser null");
+        if(numeroHabitacion == null) throw new RoomFinderException(MENSAJE_NUM_HABITACION);
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
-                                            .orElseThrow(() -> new RoomFinderException("No se encontró la habitación con el número: " + numeroHabitacion));
+                                            .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
         
         habitacionEntidad.setPrecio(precio);
 
@@ -92,9 +97,9 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public Habitacion modificarDescripcionHabitacion(String numeroHabitacion, String descripcion) throws RoomFinderException {
-        if(numeroHabitacion == null) throw new RoomFinderException("El numero de habitacion no puede ser null");
+        if(numeroHabitacion == null) throw new RoomFinderException(MENSAJE_NUM_HABITACION);
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
-                                            .orElseThrow(() -> new RoomFinderException("No se encontró la habitación con el número: " + numeroHabitacion));
+                                            .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
         
         habitacionEntidad.setDescripcion(descripcion);
 
@@ -105,10 +110,10 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public void agregarServiciosHabitacion(String numeroHabitacion, Set<Servicio> servicios) throws RoomFinderException {
-        if(numeroHabitacion == null || servicios == null) throw new RoomFinderException("El numero o servicios de la habitacion no pueden ser null");
+        if(numeroHabitacion == null || servicios == null) throw new RoomFinderException(MENSAJE_DATOS);
         
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
-                                            .orElseThrow(() -> new RoomFinderException("No se encontró la habitación con el número: " + numeroHabitacion));
+                                            .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
         
         habitacionEntidad.setServicios(servicios);
 
@@ -117,10 +122,10 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public void modificarServiciosHabitacion(String numeroHabitacion, Set<Servicio> servicios) throws RoomFinderException {
-        if(numeroHabitacion == null || servicios == null) throw new RoomFinderException("El numero o servicios de la habitacion no pueden ser null");
+        if(numeroHabitacion == null || servicios == null) throw new RoomFinderException(MENSAJE_DATOS);
         
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
-                                            .orElseThrow(() -> new RoomFinderException("No se encontró la habitación con el número: " + numeroHabitacion));
+                                            .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
         
         servicios.addAll(habitacionEntidad.getServicios());
         habitacionEntidad.setServicios(servicios);
@@ -130,10 +135,10 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public void eliminarServiciosHabitacion(String numeroHabitacion, Set<Servicio> servicios) throws RoomFinderException {
-        if(numeroHabitacion == null || servicios == null) throw new RoomFinderException("El numero o servicios de la habitacion no pueden ser null");
+        if(numeroHabitacion == null || servicios == null) throw new RoomFinderException(MENSAJE_DATOS);
         
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
-                                            .orElseThrow(() -> new RoomFinderException("No se encontró la habitación con el número: " + numeroHabitacion));
+                                            .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
         
         servicios.removeAll(habitacionEntidad.getServicios());
         habitacionEntidad.setServicios(servicios);
