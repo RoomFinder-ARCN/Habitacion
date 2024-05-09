@@ -90,17 +90,17 @@ public class HabitacionServicioTest {
     }
 
     @Test
-    public void noDeberiaPermitirServicioCuandoNoExisteElValorDelServicio() throws RoomFinderException{
+    public void noDeberiaPermitirServicioCuandoNoExisteElValorDelServicio(){
         assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf("PLANTAS"));
     }
 
     @Test
-    public void noDeberiaPermitirServicioCuandoElValorDelServicioEsNulo() throws RoomFinderException{
+    public void noDeberiaPermitirServicioCuandoElValorDelServicioEsNulo(){
         assertThrows(NullPointerException.class, () -> Servicio.valueOf(null));
     }
 
     @Test
-    public void noDeberiaPermitirServicioCuandoElValorDelServicioEsVacio() throws RoomFinderException{
+    public void noDeberiaPermitirServicioCuandoElValorDelServicioEsVacio(){
         assertThrows(IllegalArgumentException.class, () -> Servicio.valueOf(""));
     }
 
