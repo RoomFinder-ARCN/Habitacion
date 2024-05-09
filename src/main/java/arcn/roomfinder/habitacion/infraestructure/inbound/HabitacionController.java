@@ -19,6 +19,7 @@ import arcn.roomfinder.habitacion.application.HabitacionServicio;
 import arcn.roomfinder.habitacion.domain.model.EstadoHabitacion;
 import arcn.roomfinder.habitacion.domain.model.Habitacion;
 import arcn.roomfinder.habitacion.domain.model.Servicio;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(value = "/habitacion")
@@ -31,6 +32,7 @@ public class HabitacionController {
         this.habitacionServicio = habitacionServicio;
     }
 
+    @Operation(summary = "Agregar habitacion")
     @PostMapping(value = "")
     public ResponseEntity<?> agregarHabitacion(@RequestBody Habitacion habitacion){
         try{
@@ -43,6 +45,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Consultar todas las habitaciones")
     @GetMapping(value = "")
     public ResponseEntity<?> consultarTodasLasHabitaciones(){
         try{
@@ -54,6 +57,7 @@ public class HabitacionController {
         }
     }    
 
+    @Operation(summary = "Consultar habitacion por numero")
     @GetMapping(value = "/{numeroHabitacion}")
     public ResponseEntity<?> consultarHabitacionPorNumero(@PathVariable("numeroHabitacion") String numeroHabitacion){
         try{
@@ -64,6 +68,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Modificar el estado de la habitacion")
     @PutMapping(value = "/{numeroHabitacion}/estadoHabitacion")
     public ResponseEntity<?> modificarEstadoHabitacion(@PathVariable String numeroHabitacion, @RequestParam("estadoHabitacion") EstadoHabitacion estadoHabitacion){
         try{
@@ -74,6 +79,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Modificar el precio de la habitacion")
     @PutMapping(value = "/{numeroHabitacion}/precio")
     public ResponseEntity<?> modificarPrecioHabitacion(@PathVariable String numeroHabitacion, @RequestParam("precio") Double precio){
         try{
@@ -84,6 +90,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Modificar la descripcion de la habitacion")
     @PutMapping(value = "/{numeroHabitacion}/descripcion")
     public ResponseEntity<?> modificarDescripcionHabitacion(@PathVariable String numeroHabitacion, @RequestParam("descripcion") String descripcion){
         try{
@@ -94,6 +101,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Agregar servicios a la habitacion")
     @PutMapping(value = "/{numeroHabitacion}/servicios")
     public ResponseEntity<?> agregarServiciosHabitacion(@PathVariable String numeroHabitacion, @RequestBody Set<Servicio> servicios){
         try{
@@ -104,6 +112,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Modificar servicios de la habitacion")
     @PatchMapping(value = "/{numeroHabitacion}/servicios")
     public ResponseEntity<?> modificarServiciosHabitacion(@PathVariable String numeroHabitacion, @RequestBody Set<Servicio> servicios){
         try{
@@ -114,6 +123,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Eliminar servicios de la habitacion")
     @DeleteMapping(value = "/{numeroHabitacion}/servicios")
     public ResponseEntity<?> eliminarServiciosHabitacion(@PathVariable String numeroHabitacion,  @RequestBody Set<Servicio> servicios){
         try{
