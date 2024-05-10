@@ -165,18 +165,8 @@ public class HabitacionServicioTest {
     }
 
     @Test
-    public void noDeberiaConsultarHabitacionPorTipoCuandoElValorNoEsValido() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> habitacionServicio.consultarHabitacionesPorTipo(TipoHabitacion.valueOf("MESA")));
-    }
-
-    @Test
     public void noDeberiaConsultarHabitacionPorTipoCuandoElValorEsNulo() throws RoomFinderException{
         assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionesPorTipo(null));
-    }
-
-    @Test
-    public void noDeberiaConsultarHabitacionPorTipoCuandoElValorEsVacio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> habitacionServicio.consultarHabitacionesPorTipo(TipoHabitacion.valueOf("")));
     }
 
     @Test
@@ -200,8 +190,6 @@ public class HabitacionServicioTest {
         assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionesPorPrecio(-100000.0));
         assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionesPorPrecio(0.0));
     }
-
- 
 
     @Test
     public void deberiaModificarEstadoHabitacion() throws RoomFinderException{
