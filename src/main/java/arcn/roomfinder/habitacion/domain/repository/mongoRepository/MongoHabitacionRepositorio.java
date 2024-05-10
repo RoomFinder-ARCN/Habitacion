@@ -1,5 +1,6 @@
 package arcn.roomfinder.habitacion.domain.repository.mongorepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -154,8 +155,10 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
                                             .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
         
-        servicios.removeAll(habitacionEntidad.getServicios());
-        habitacionEntidad.setServicios(servicios);
+        Set<Servicio> serviciosAEliminar = new HashSet<>(servicios);
+        serviciosAEliminar.retainAll(habitacionEntidad.getServicios());
+
+        habitacionEntidad.getServicios().removeAll(serviciosAEliminar);
 
         mongoHabitacionInterface.save(habitacionEntidad);
     }
