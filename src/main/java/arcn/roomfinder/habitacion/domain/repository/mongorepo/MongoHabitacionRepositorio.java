@@ -72,7 +72,7 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
         return mongoHabitacionInterface.findByTipoHabitacion(tipoHabitacion)
             .stream()
             .map(this::crearHabitacion)
-            .collect(Collectors.toList());
+            .toList();
 
     }
 
@@ -81,7 +81,7 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
         return mongoHabitacionInterface.findByPrecio(precio)
             .stream()
             .map(this::crearHabitacion)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Override
