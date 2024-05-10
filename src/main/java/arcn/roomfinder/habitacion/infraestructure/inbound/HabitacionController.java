@@ -19,6 +19,8 @@ import arcn.roomfinder.habitacion.application.HabitacionServicio;
 import arcn.roomfinder.habitacion.domain.model.EstadoHabitacion;
 import arcn.roomfinder.habitacion.domain.model.Habitacion;
 import arcn.roomfinder.habitacion.domain.model.Servicio;
+import arcn.roomfinder.habitacion.domain.model.TipoHabitacion;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(value = "/habitacion")
@@ -31,6 +33,7 @@ public class HabitacionController {
         this.habitacionServicio = habitacionServicio;
     }
 
+    @Operation(summary = "Agregar habitacion")
     @PostMapping(value = "")
     public ResponseEntity<?> agregarHabitacion(@RequestBody Habitacion habitacion){
         try{
@@ -43,6 +46,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Consultar todas las habitaciones")
     @GetMapping(value = "")
     public ResponseEntity<?> consultarTodasLasHabitaciones(){
         try{
@@ -54,7 +58,8 @@ public class HabitacionController {
         }
     }    
 
-    @GetMapping(value = "/{numeroHabitacion}")
+    @Operation(summary = "Consultar habitacion por numero")
+    @GetMapping(value = "/numero/{numeroHabitacion}")
     public ResponseEntity<?> consultarHabitacionPorNumero(@PathVariable("numeroHabitacion") String numeroHabitacion){
         try{
             var habitacion= habitacionServicio.consultarHabitacionPorNumero(numeroHabitacion);
@@ -64,6 +69,29 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Consultar habitacion por tipo")
+    @GetMapping(value = "/tipo/{tipoHabitacion}")
+    public ResponseEntity<?> consultarHabitacionPorTipo(@PathVariable("tipoHabitacion") TipoHabitacion tipoHabitacion){
+        try{
+            var habitacion= habitacionServicio.consultarHabitacionPorTipo(tipoHabitacion);
+            return ResponseEntity.status(200).body(habitacion);
+        }catch(Exception e){
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Consultar habitacion por precio")
+    @GetMapping(value = "/precio/{precio}")
+    public ResponseEntity<?> consultarHabitacionPorPrecio(@PathVariable("precio") Double precio){
+        try{
+            var habitacion= habitacionServicio.consultarHabitacionPorPrecio(precio);
+            return ResponseEntity.status(200).body(habitacion);
+        }catch(Exception e){
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Modificar el estado de la habitacion")
     @PutMapping(value = "/{numeroHabitacion}/estadoHabitacion")
     public ResponseEntity<?> modificarEstadoHabitacion(@PathVariable String numeroHabitacion, @RequestParam("estadoHabitacion") EstadoHabitacion estadoHabitacion){
         try{
@@ -74,6 +102,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Modificar el precio de la habitacion")
     @PutMapping(value = "/{numeroHabitacion}/precio")
     public ResponseEntity<?> modificarPrecioHabitacion(@PathVariable String numeroHabitacion, @RequestParam("precio") Double precio){
         try{
@@ -84,6 +113,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Modificar la descripcion de la habitacion")
     @PutMapping(value = "/{numeroHabitacion}/descripcion")
     public ResponseEntity<?> modificarDescripcionHabitacion(@PathVariable String numeroHabitacion, @RequestParam("descripcion") String descripcion){
         try{
@@ -94,6 +124,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Agregar servicios a la habitacion")
     @PutMapping(value = "/{numeroHabitacion}/servicios")
     public ResponseEntity<?> agregarServiciosHabitacion(@PathVariable String numeroHabitacion, @RequestBody Set<Servicio> servicios){
         try{
@@ -104,6 +135,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Modificar servicios de la habitacion")
     @PatchMapping(value = "/{numeroHabitacion}/servicios")
     public ResponseEntity<?> modificarServiciosHabitacion(@PathVariable String numeroHabitacion, @RequestBody Set<Servicio> servicios){
         try{
@@ -114,6 +146,7 @@ public class HabitacionController {
         }
     }
 
+    @Operation(summary = "Eliminar servicios de la habitacion")
     @DeleteMapping(value = "/{numeroHabitacion}/servicios")
     public ResponseEntity<?> eliminarServiciosHabitacion(@PathVariable String numeroHabitacion,  @RequestBody Set<Servicio> servicios){
         try{
