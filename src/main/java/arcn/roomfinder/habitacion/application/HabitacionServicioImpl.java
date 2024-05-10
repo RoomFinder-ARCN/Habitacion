@@ -47,7 +47,7 @@ public class HabitacionServicioImpl implements HabitacionServicio {
 
     @Override
     public List<Habitacion> consultarHabitacionPorTipo(TipoHabitacion tipoHabitacion) throws RoomFinderException {
-        if(tipoHabitacion == null || tipoHabitacion.equals("")) throw new RoomFinderException(MENSAJE_DATOS);
+        if(tipoHabitacion == null) throw new RoomFinderException(MENSAJE_DATOS);
         return habitacionRepositorio.consultarHabitacionPorTipo(tipoHabitacion);
     }
 
