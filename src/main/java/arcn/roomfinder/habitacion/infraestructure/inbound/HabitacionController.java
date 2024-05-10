@@ -19,6 +19,7 @@ import arcn.roomfinder.habitacion.application.HabitacionServicio;
 import arcn.roomfinder.habitacion.domain.model.EstadoHabitacion;
 import arcn.roomfinder.habitacion.domain.model.Habitacion;
 import arcn.roomfinder.habitacion.domain.model.Servicio;
+import arcn.roomfinder.habitacion.domain.model.TipoHabitacion;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
@@ -58,10 +59,32 @@ public class HabitacionController {
     }    
 
     @Operation(summary = "Consultar habitacion por numero")
-    @GetMapping(value = "/{numeroHabitacion}")
+    @GetMapping(value = "/numero/{numeroHabitacion}")
     public ResponseEntity<?> consultarHabitacionPorNumero(@PathVariable("numeroHabitacion") String numeroHabitacion){
         try{
             var habitacion= habitacionServicio.consultarHabitacionPorNumero(numeroHabitacion);
+            return ResponseEntity.status(200).body(habitacion);
+        }catch(Exception e){
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Consultar habitacion por tipo")
+    @GetMapping(value = "/tipo/{tipoHabitacion}")
+    public ResponseEntity<?> consultarHabitacionPorTipo(@PathVariable("tipoHabitacion") TipoHabitacion tipoHabitacion){
+        try{
+            var habitacion= habitacionServicio.consultarHabitacionPorTipo(tipoHabitacion);
+            return ResponseEntity.status(200).body(habitacion);
+        }catch(Exception e){
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Consultar habitacion por precio")
+    @GetMapping(value = "/precio/{precio}")
+    public ResponseEntity<?> consultarHabitacionPorPrecio(@PathVariable("precio") Double precio){
+        try{
+            var habitacion= habitacionServicio.consultarHabitacionPorPrecio(precio);
             return ResponseEntity.status(200).body(habitacion);
         }catch(Exception e){
             return ResponseEntity.status(500).body(e.getMessage());

@@ -10,6 +10,7 @@ import arcn.roomfinder.habitacion.domain.exception.RoomFinderException;
 import arcn.roomfinder.habitacion.domain.model.EstadoHabitacion;
 import arcn.roomfinder.habitacion.domain.model.Habitacion;
 import arcn.roomfinder.habitacion.domain.model.Servicio;
+import arcn.roomfinder.habitacion.domain.model.TipoHabitacion;
 import arcn.roomfinder.habitacion.domain.repository.HabitacionRepositorio;
 
 @Service
@@ -20,6 +21,7 @@ public class HabitacionServicioImpl implements HabitacionServicio {
     private static final String HABITACION_NO_NULA = "La habitacion no puede ser null";
     private static final String MENSAJE_NUM_HABITACION = "El numero de habitacion no puede ser nulo o vacio";
     private static final String MENSAJE_DATOS = "Los datos no pueden ser nulos o vacios";
+    private static final String MENSAJE_PRECIO = "El precio debe ser mayor a 0";
 
     @Autowired
     public HabitacionServicioImpl(HabitacionRepositorio habitacionRepositorio) {
@@ -44,6 +46,19 @@ public class HabitacionServicioImpl implements HabitacionServicio {
     }
 
     @Override
+    public List<Habitacion> consultarHabitacionPorTipo(TipoHabitacion tipoHabitacion) throws RoomFinderException {
+        if(tipoHabitacion == null || tipoHabitacion.equals("")) throw new RoomFinderException(MENSAJE_DATOS);
+        return habitacionRepositorio.consultarHabitacionPorTipo(tipoHabitacion);
+    }
+
+    @Override
+    public List<Habitacion> consultarHabitacionPorPrecio(Double precio) throws RoomFinderException {
+        if(precio == null) throw new RoomFinderException(MENSAJE_DATOS);
+        if(precio <= 0) throw new RoomFinderException(MENSAJE_PRECIO);
+        return habitacionRepositorio.consultarHabitacionPorPrecio(precio);
+    }
+
+    @Override
     public Habitacion modificarEstadoHabitacion(String numeroHabitacion, EstadoHabitacion estadoHabitacion) throws RoomFinderException {
         if(estadoHabitacion == null || numeroHabitacion == null || numeroHabitacion.equals("")) throw new RoomFinderException(MENSAJE_DATOS);
         return habitacionRepositorio.modificarEstadoHabitacion(numeroHabitacion, estadoHabitacion);
@@ -52,7 +67,7 @@ public class HabitacionServicioImpl implements HabitacionServicio {
     @Override
     public Habitacion modificarPrecioHabitacion(String numeroHabitacion, Double precio) throws RoomFinderException {
         if(numeroHabitacion == null || numeroHabitacion.equals("") || precio == null) throw new RoomFinderException(MENSAJE_DATOS);
-        if(precio <= 0) throw new RoomFinderException("El precio debe ser mayor a 0");
+        if(precio <= 0) throw new RoomFinderException(MENSAJE_PRECIO);
         return habitacionRepositorio.modificarPrecioHabitacion(numeroHabitacion, precio);  
     }
 

@@ -2,6 +2,7 @@ package arcn.roomfinder.habitacion.domain.repository.mongoRepository;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import arcn.roomfinder.habitacion.domain.exception.RoomFinderException;
 import arcn.roomfinder.habitacion.domain.model.EstadoHabitacion;
 import arcn.roomfinder.habitacion.domain.model.Habitacion;
 import arcn.roomfinder.habitacion.domain.model.Servicio;
+import arcn.roomfinder.habitacion.domain.model.TipoHabitacion;
 import arcn.roomfinder.habitacion.domain.repository.HabitacionRepositorio;
 
 @Repository
@@ -22,6 +24,7 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
     private static final String MENSAJE_NUM_HABITACION = "El numero de habitacion no puede ser null";
     private static final String HABITACION_NO_ENCONTRADA = "No se encontró la habitación con el número: ";
     private static final String MENSAJE_DATOS = "El numero o servicios de la habitacion no pueden ser null";
+    private static final String MENSAJE_ERROR = "Verifique los datos ingresados: ";
 
     @Autowired
     public MongoHabitacionRepositorio(MongoHabitacionInterface mongoHabitacionInterface) {
@@ -67,6 +70,19 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
                                             .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
 
         return crearHabitacion(habitacionEntidad);
+    }
+
+    @Override
+    public List<Habitacion> consultarHabitacionPorTipo(TipoHabitacion tipoHabitacion) throws RoomFinderException {
+        return mongoHabitacionInterface.findByTipoHabitacion(tipoHabitacion).stream().map(habitacion -> 
+            crearHabitacion(habitacion)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<Habitacion> consultarHabitacionPorPrecio(Double precio) throws RoomFinderException {
+        return mongoHabitacionInterface.findByPrecio(precio).stream().map(habitacion -> 
+            crearHabitacion(habitacion)).collect(Collectors.toList());
     }
 
     @Override
