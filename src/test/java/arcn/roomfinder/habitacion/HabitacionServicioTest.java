@@ -158,25 +158,25 @@ public class HabitacionServicioTest {
         List<Habitacion> habitaciones = new ArrayList<>();
         habitaciones.add(habitacionCorrecta);
 
-        doReturn(habitaciones).when(habitacionRepositorio).consultarHabitacionPorTipo(any(TipoHabitacion.class));
-        List<Habitacion> habitacionRespuesta = habitacionServicio.consultarHabitacionPorTipo(TipoHabitacion.valueOf("FAMILIAR"));
+        doReturn(habitaciones).when(habitacionRepositorio).consultarHabitacionesPorTipo(any(TipoHabitacion.class));
+        List<Habitacion> habitacionRespuesta = habitacionServicio.consultarHabitacionesPorTipo(TipoHabitacion.valueOf("FAMILIAR"));
 
         assertEquals(habitaciones.get(0).getNumeroHabitacion(), habitacionRespuesta.get(0).getNumeroHabitacion());
     }
 
     @Test
     public void noDeberiaConsultarHabitacionPorTipoCuandoElValorNoEsValido() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> habitacionServicio.consultarHabitacionPorTipo(TipoHabitacion.valueOf("MESA")));
+        assertThrows(IllegalArgumentException.class, () -> habitacionServicio.consultarHabitacionesPorTipo(TipoHabitacion.valueOf("MESA")));
     }
 
     @Test
     public void noDeberiaConsultarHabitacionPorTipoCuandoElValorEsNulo() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionPorTipo(null));
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionesPorTipo(null));
     }
 
     @Test
     public void noDeberiaConsultarHabitacionPorTipoCuandoElValorEsVacio() throws RoomFinderException{
-        assertThrows(IllegalArgumentException.class, () -> habitacionServicio.consultarHabitacionPorTipo(TipoHabitacion.valueOf("")));
+        assertThrows(IllegalArgumentException.class, () -> habitacionServicio.consultarHabitacionesPorTipo(TipoHabitacion.valueOf("")));
     }
 
     @Test
@@ -184,21 +184,21 @@ public class HabitacionServicioTest {
         List<Habitacion> habitaciones = new ArrayList<>();
         habitaciones.add(habitacionCorrecta);
 
-        doReturn(habitaciones).when(habitacionRepositorio).consultarHabitacionPorPrecio(anyDouble());
-        List<Habitacion> habitacionRespuesta = habitacionServicio.consultarHabitacionPorPrecio(800000.0);
+        doReturn(habitaciones).when(habitacionRepositorio).consultarHabitacionesPorPrecio(anyDouble());
+        List<Habitacion> habitacionRespuesta = habitacionServicio.consultarHabitacionesPorPrecio(800000.0);
 
         assertEquals(habitaciones.get(0).getNumeroHabitacion(), habitacionRespuesta.get(0).getNumeroHabitacion());
     }
 
     @Test
     public void noDeberiaConsultarHabitacionPorPrecioCuandoElValorEsNulo() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionPorPrecio(null));
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionesPorPrecio(null));
     }
 
     @Test
     public void noDeberiaConsultarHabitacionPorPrecioCuandoNoEsMayorACero() throws RoomFinderException{
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionPorPrecio(-100000.0));
-        assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionPorPrecio(0.0));
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionesPorPrecio(-100000.0));
+        assertThrows(RoomFinderException.class, () -> habitacionServicio.consultarHabitacionesPorPrecio(0.0));
     }
 
  
