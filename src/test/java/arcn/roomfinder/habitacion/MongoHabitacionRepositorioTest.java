@@ -13,6 +13,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -217,13 +218,14 @@ public class MongoHabitacionRepositorioTest {
         assertThrows(RoomFinderException.class, () -> mongoHabitacionRepositorio.agregarServiciosHabitacion("300", servicios));
     }
 
-    /*@Test
+    @Test
     public void deberiaModificarServiciosHabitacion() throws RoomFinderException {
+        Set<Servicio> serviciosPrueba = new HashSet<Servicio>(servicios);
         doReturn(Optional.of(habitacionCorrectaEntidad)).when(mongoHabitacionInterface).findById(any(String.class));
         doReturn(habitacionCorrectaEntidad).when(mongoHabitacionInterface).save(any(HabitacionEntidad.class));
-        mongoHabitacionRepositorio.modificarServiciosHabitacion(habitacionCorrecta.getNumeroHabitacion(), servicios);
-        assertEquals(servicios, mongoHabitacionRepositorio.consultarHabitacionPorNumero(habitacionCorrecta.getNumeroHabitacion()).getServicios());
-    }*/
+        mongoHabitacionRepositorio.modificarServiciosHabitacion(habitacionCorrecta.getNumeroHabitacion(), serviciosPrueba);
+        assertEquals(serviciosPrueba, mongoHabitacionRepositorio.consultarHabitacionPorNumero(habitacionCorrecta.getNumeroHabitacion()).getServicios());
+    }
 
     @Test
     public void noDeberiaModificarServiciosHabitacionCuandoNumHabitacionEsNulo() throws RoomFinderException {
