@@ -52,15 +52,8 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public List<Habitacion> consultarTodasLasHabitaciones() {
-       return mongoHabitacionInterface.findAll().parallelStream().map(habitacion->
-            {
-                try{
-                    return this.consultarHabitacionPorNumero(habitacion.getNumeroHabitacion());
-                }catch(RoomFinderException e){
-                    return null;
-                }
-            }
-       ).toList();
+       return mongoHabitacionInterface.findAll().parallelStream().map(habitacionEntidad->
+            crearHabitacion(habitacionEntidad)).toList();
     }
 
     @Override
@@ -73,16 +66,16 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
     }
 
     @Override
-    public List<Habitacion> consultarHabitacionPorTipo(TipoHabitacion tipoHabitacion) throws RoomFinderException {
-        return mongoHabitacionInterface.findByTipoHabitacion(tipoHabitacion).stream().map(habitacion -> 
-            crearHabitacion(habitacion)).collect(Collectors.toList());
+    public List<Habitacion> consultarHabitacionesPorTipo(TipoHabitacion tipoHabitacion) throws RoomFinderException {
+        return mongoHabitacionInterface.findByTipoHabitacion(tipoHabitacion).stream().map(habitacionEntidad -> 
+            crearHabitacion(habitacionEntidad)).collect(Collectors.toList());
 
     }
 
     @Override
-    public List<Habitacion> consultarHabitacionPorPrecio(Double precio) throws RoomFinderException {
-        return mongoHabitacionInterface.findByPrecio(precio).stream().map(habitacion -> 
-            crearHabitacion(habitacion)).collect(Collectors.toList());
+    public List<Habitacion> consultarHabitacionesPorPrecio(Double precio) throws RoomFinderException {
+        return mongoHabitacionInterface.findByPrecio(precio).stream().map(habitacionEntidad -> 
+            crearHabitacion(habitacionEntidad)).collect(Collectors.toList());
     }
 
     @Override

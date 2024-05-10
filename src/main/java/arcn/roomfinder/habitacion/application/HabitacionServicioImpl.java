@@ -46,16 +46,16 @@ public class HabitacionServicioImpl implements HabitacionServicio {
     }
 
     @Override
-    public List<Habitacion> consultarHabitacionPorTipo(TipoHabitacion tipoHabitacion) throws RoomFinderException {
+    public List<Habitacion> consultarHabitacionesPorTipo(TipoHabitacion tipoHabitacion) throws RoomFinderException {
         if(tipoHabitacion == null) throw new RoomFinderException(MENSAJE_DATOS);
-        return habitacionRepositorio.consultarHabitacionPorTipo(tipoHabitacion);
+        return habitacionRepositorio.consultarHabitacionesPorTipo(tipoHabitacion);
     }
 
     @Override
-    public List<Habitacion> consultarHabitacionPorPrecio(Double precio) throws RoomFinderException {
+    public List<Habitacion> consultarHabitacionesPorPrecio(Double precio) throws RoomFinderException {
         if(precio == null) throw new RoomFinderException(MENSAJE_DATOS);
         if(precio <= 0) throw new RoomFinderException(MENSAJE_PRECIO);
-        return habitacionRepositorio.consultarHabitacionPorPrecio(precio);
+        return habitacionRepositorio.consultarHabitacionesPorPrecio(precio);
     }
 
     @Override
