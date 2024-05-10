@@ -1,4 +1,4 @@
-package arcn.roomfinder.habitacion.domain.repository.mongoRepository;
+package arcn.roomfinder.habitacion.domain.repository.mongorepository;
 
 import java.util.List;
 

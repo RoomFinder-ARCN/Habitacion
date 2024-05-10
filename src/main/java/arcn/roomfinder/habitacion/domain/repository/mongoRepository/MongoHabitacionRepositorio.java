@@ -1,5 +1,6 @@
-package arcn.roomfinder.habitacion.domain.repository.mongoRepository;
+package arcn.roomfinder.habitacion.domain.repository.mongorepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +25,6 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
     private static final String MENSAJE_NUM_HABITACION = "El numero de habitacion no puede ser null";
     private static final String HABITACION_NO_ENCONTRADA = "No se encontró la habitación con el número: ";
     private static final String MENSAJE_DATOS = "El numero o servicios de la habitacion no pueden ser null";
-    private static final String MENSAJE_ERROR = "Verifique los datos ingresados: ";
 
     @Autowired
     public MongoHabitacionRepositorio(MongoHabitacionInterface mongoHabitacionInterface) {
@@ -52,8 +52,10 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public List<Habitacion> consultarTodasLasHabitaciones() {
-       return mongoHabitacionInterface.findAll().parallelStream().map(habitacionEntidad->
-            crearHabitacion(habitacionEntidad)).toList();
+       return mongoHabitacionInterface.findAll()
+            .parallelStream()
+            .map(this::crearHabitacion)
+            .toList();
     }
 
     @Override
@@ -67,15 +69,19 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
 
     @Override
     public List<Habitacion> consultarHabitacionesPorTipo(TipoHabitacion tipoHabitacion) throws RoomFinderException {
-        return mongoHabitacionInterface.findByTipoHabitacion(tipoHabitacion).stream().map(habitacionEntidad -> 
-            crearHabitacion(habitacionEntidad)).collect(Collectors.toList());
+        return mongoHabitacionInterface.findByTipoHabitacion(tipoHabitacion)
+            .stream()
+            .map(this::crearHabitacion)
+            .collect(Collectors.toList());
 
     }
 
     @Override
     public List<Habitacion> consultarHabitacionesPorPrecio(Double precio) throws RoomFinderException {
-        return mongoHabitacionInterface.findByPrecio(precio).stream().map(habitacionEntidad -> 
-            crearHabitacion(habitacionEntidad)).collect(Collectors.toList());
+        return mongoHabitacionInterface.findByPrecio(precio)
+            .stream()
+            .map(this::crearHabitacion)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -149,8 +155,10 @@ public class MongoHabitacionRepositorio implements HabitacionRepositorio{
         HabitacionEntidad habitacionEntidad = mongoHabitacionInterface.findById(numeroHabitacion)
                                             .orElseThrow(() -> new RoomFinderException(HABITACION_NO_ENCONTRADA + numeroHabitacion));
         
-        servicios.removeAll(habitacionEntidad.getServicios());
-        habitacionEntidad.setServicios(servicios);
+        Set<Servicio> serviciosAEliminar = new HashSet<>(servicios);
+        serviciosAEliminar.retainAll(habitacionEntidad.getServicios());
+
+        habitacionEntidad.getServicios().removeAll(serviciosAEliminar);
 
         mongoHabitacionInterface.save(habitacionEntidad);
     }
